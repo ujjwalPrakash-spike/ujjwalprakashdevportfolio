@@ -76,11 +76,11 @@ export default function CursorOrb() {
     >
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 w-10 h-10 rounded-full border-[1.5px] border-[#999999]/40 bg-transparent"
+        className="fixed top-0 left-0 w-10 h-10 rounded-full border-[1.5px] border-[#999999]/40 bg-transparent will-change-transform [backface-visibility:hidden]"
       />
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 w-2.5 h-2.5 rounded-full bg-[#1A4DFF]"
+        className="fixed top-0 left-0 w-2.5 h-2.5 rounded-full bg-[#1A4DFF] will-change-transform [backface-visibility:hidden]"
       />
     </div>
   );

@@ -178,7 +178,10 @@ const Word: FC<WordProps> = ({ children, progress, range }) => {
   const opacity = useTransform(progress, range, [0.15, 1])
   return (
     <span className="relative inline-block mr-[0.27em]">
-      <motion.span style={{ opacity }} className="inline">
+      <motion.span 
+        style={{ opacity }} 
+        className="inline will-change-opacity [backface-visibility:hidden]"
+      >
         {children}
       </motion.span>
     </span>
