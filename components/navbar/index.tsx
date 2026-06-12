@@ -19,7 +19,7 @@ export default function Navbar() {
     transition: "transform 0.4s ease, opacity 0.3s ease",
   }}
 >
-  <nav className="grid grid-cols-12 lg:items-start w-[88vw] pt-10 pb-6 px-10">
+  <nav className="grid grid-cols-12 lg:items-start w-[92vw] pt-10 pb-6 px-10">
     <NavBrand />
     <NavMeta />
     <div className="col-start-7 col-span-6 flex items-center justify-between">
