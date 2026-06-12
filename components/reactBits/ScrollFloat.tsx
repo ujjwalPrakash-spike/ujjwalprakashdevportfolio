@@ -31,12 +31,14 @@ const ScrollFloat: React.FC<ScrollFloatProps> = ({
   const containerRef = useRef<HTMLHeadingElement>(null);
 
   const splitText = useMemo(() => {
-    const text = typeof children === 'string' ? children : '';
-    return text.split('').map((char, index) => (
-      <span className="inline-block word" key={index}>
-        {char === ' ' ? '\u00A0' : char}
-      </span>
-    ));
+    if (typeof children === 'string') {
+      return children.split('').map((char, index) => (
+        <span className="inline-block word" key={index}>
+          {char === ' ' ? '\u00A0' : char}
+        </span>
+      ));
+    }
+    return children;
   }, [children]);
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const ScrollFloat: React.FC<ScrollFloatProps> = ({
 
     const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
 
-    const charElements = el.querySelectorAll('.inline-block');
+    const charElements = el.querySelectorAll('.word');
 
     gsap.fromTo(
       charElements,
@@ -70,7 +72,7 @@ const ScrollFloat: React.FC<ScrollFloatProps> = ({
           scroller,
           start: scrollStart,
           end: scrollEnd,
-          scrub: true
+          scrub: 1.5
         }
       }
     );
