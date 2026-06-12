@@ -18,8 +18,8 @@ export default function DotField() {
     // High DPI support for sharp dots on Retina displays
     const dpr = window.devicePixelRatio || 1;
     
-    const spacing = 60; // Distance between dots to match previous backgroundSize
-    const dotRadius = 1.2; // Size of dots
+    const spacing = 70  ; // Distance between dots to match previous backgroundSize
+    const dotRadius = 1.5; // Size of dots
     let dots: { x: number, y: number, originX: number, originY: number }[] = [];
 
     const initDots = () => {

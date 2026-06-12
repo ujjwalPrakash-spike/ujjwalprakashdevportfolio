@@ -38,7 +38,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}
     >
-      <body className="min-h-screen flex flex-col pt-[70px] cursor-default bg-[#F0F0EF]">
+      <body className="min-h-screen flex flex-col pt-[70px] cursor-default bg-[#dee1e4]">
         <Providers>
           <DotField />
           <CursorOrb />
