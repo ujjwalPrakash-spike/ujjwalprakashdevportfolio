@@ -7,7 +7,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative w-full px-6 lg:px-10 pt-8 pb-20">
-      <div className="w-[87vw]  mx-auto flex flex-col min-h-[80vh]  rounded-xl p-6">
+      <div className="w-[87vw]  mx-auto flex  flex-col min-h-[80vh]  rounded-xl pt-5 p-6">
 
         <div className="flex flex-1 mt-6 min-w-0">
           <div className="w-full min-w-0">

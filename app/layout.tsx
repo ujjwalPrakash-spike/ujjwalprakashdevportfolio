@@ -8,6 +8,7 @@ import Footer from "@/components/footer";
 import CursorOrb from "@/components/reactBits/CursorOrb";
 import DotField from "@/components/reactBits/DotField";
 import Providers from "@/components/animationSmooth/LenisProvider";
+import LoadingScreen from "@/components/loading/LoadingScreen";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -40,6 +41,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}
     >
       <body className="min-h-screen flex flex-col pt-[70px] cursor-default bg-[#dee1e4] overflow-x-hidden">
+        <LoadingScreen />
         <Providers>
           <DotField />
           <CursorOrb />
