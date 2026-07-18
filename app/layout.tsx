@@ -26,7 +26,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ujjwal Prakash",
+  title: "Ujjwal Prakash3",
   description: "Backend Developer • Go • TypeScript • Systems",
 };
 

@@ -8,7 +8,6 @@ export default function HeroSection() {
   return (
     <section className="relative w-full px-6 lg:px-10 pt-8 pb-20">
       <div className="w-[87vw]  mx-auto flex  flex-col min-h-[80vh]  rounded-xl pt-5 p-6">
-
         <div className="flex flex-1 mt-6 min-w-0">
           <div className="w-full min-w-0">
             <h1
@@ -20,9 +19,7 @@ export default function HeroSection() {
                 text-[#2E3129]
               "
             >
-              <span className="block">
-                {hero.titleLine1}
-              </span>
+              <span className="block">{hero.titleLine1}</span>
 
               <span className="flex items-center gap-[0.15em] min-w-0 -mt-[0.05em]">
                 <span>{hero.titleLine2}</span>
@@ -45,8 +42,7 @@ export default function HeroSection() {
                   texts={[
                     "Architecture",
                     "Engineering",
-                    "Cloud Systems",
-                    "Deep Learning",
+                    "Cloud Dev",
                     "Go & Next.js",
                   ]}
                   mainClassName="
@@ -80,9 +76,7 @@ export default function HeroSection() {
         <div className="grid grid-cols-12 items-center gap-y-8 gap-x-6 mt-10">
           {/* LEFT */}
           <div className="flex items-center gap-2 whitespace-nowrap">
-            <span className="font-bold text-[14px]">
-              {hero.footerPrefix}
-            </span>
+            <span className="font-bold text-[14px]">{hero.footerPrefix}</span>
 
             <span className="text-[12px] text-[#111111]">
               {hero.footerText}
@@ -100,7 +94,7 @@ export default function HeroSection() {
               </span>
             </button>
           </div>
-    
+
           {/* RIGHT */}
           <div className="col-span-12 md:col-start-10 md:col-span-3">
             <div className="text-[#1A4DFF] text-[12px] leading-none mb-3">

@@ -102,6 +102,7 @@ export default function ReportSection() {
             ref={imageRef}
             className="relative w-full h-full will-change-transform"
           >
+            {/*
             <Image
               src={report.imagePath}
               alt="2025 Report Visual"
@@ -109,6 +110,16 @@ export default function ReportSection() {
               className="object-cover object-center"
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
+            />
+            */}
+            <Image
+              src="/images/optimized_video.webp"
+              alt="Client Projects Reel"
+              fill
+              className="object-cover object-center animate-fade-in"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+              unoptimized
             />
           </div>
         </div>

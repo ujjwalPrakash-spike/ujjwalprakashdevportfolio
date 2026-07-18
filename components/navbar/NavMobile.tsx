@@ -29,7 +29,6 @@ export default function NavMobile() {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // We add 'Home' as the first link for the mobile menu to match the screenshot vibe
   const mobileLinks = [{ label: "Home", href: "/" }, ...links];
 
   const overlayContent = (

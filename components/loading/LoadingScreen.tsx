@@ -3,22 +3,12 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
 
-/* ────────────────────────────────────────────────────────────────────────────
-   DESIGN (PREMIUM UPGRADE):
-   • Deep black background with blurred aurora glow orbs (blue & violet).
-   • A giant 40vw subtle stroke text of the percentage in the background.
-   • The name "UJJWAL PRAKASH" reveals with a 3D blur stagger and gradient text.
-   • Progress bar has a glowing head and a gradient fill.
-   • A sleek tag line with gradient accents.
-   • The split curtain has a glass edge highlight before it reveals the site.
-   ──────────────────────────────────────────────────────────────────────────── */
-
 const NAME_TOP = "UJJWAL";
 const NAME_BOTTOM = "PRAKASH";
 const TAGLINE = "Software Engineer • Backend Developer";
-const LOADING_DURATION = 2800; // ms for the counter to reach 100
-const EXIT_DELAY = 600;        // ms pause after counter hits 100 before exit
-const CURTAIN_DURATION = 1.2;  // seconds for the curtain to fully open
+const LOADING_DURATION = 2300; // ms for counter
+const EXIT_DELAY = 200; // ms pause after 100
+const CURTAIN_DURATION = 0.7; // seconds for shutter panels to exit
 
 export default function LoadingScreen() {
   const [progress, setProgress] = useState(0);
@@ -36,24 +26,20 @@ export default function LoadingScreen() {
     };
   }, [phase]);
 
-  // Smooth counter with easeInOut curve via requestAnimationFrame
+  // Smooth counter via requestAnimationFrame
   const tick = useCallback(() => {
     if (!startTimeRef.current) startTimeRef.current = performance.now();
     const elapsed = performance.now() - startTimeRef.current;
     const raw = Math.min(elapsed / LOADING_DURATION, 1);
 
-    // easeInOutCubic for a satisfying acceleration / deceleration feel
     const eased =
-      raw < 0.5
-        ? 4 * raw * raw * raw
-        : 1 - Math.pow(-2 * raw + 2, 3) / 2;
+      raw < 0.5 ? 4 * raw * raw * raw : 1 - Math.pow(-2 * raw + 2, 3) / 2;
 
     setProgress(Math.round(eased * 100));
 
     if (raw < 1) {
       rafRef.current = requestAnimationFrame(tick);
     } else {
-      // Counter reached 100 — pause, then begin exit
       setTimeout(() => setPhase("exiting"), EXIT_DELAY);
     }
   }, []);
@@ -63,43 +49,47 @@ export default function LoadingScreen() {
     return () => cancelAnimationFrame(rafRef.current);
   }, [tick]);
 
-  // After curtain animation completes, fully unmount
   useEffect(() => {
     if (phase === "exiting") {
       document.body.style.overflow = "";
-      const timer = setTimeout(() => {
-        setPhase("done");
-      }, CURTAIN_DURATION * 1000 + 100);
+      const timer = setTimeout(
+        () => {
+          setPhase("done");
+        },
+        CURTAIN_DURATION * 1000 + 300,
+      );
       return () => clearTimeout(timer);
     }
   }, [phase]);
 
   if (phase === "done") return null;
 
-  /* ── Letter stagger configs ───────────────────────────────────────────── */
+  const isExiting = phase === "exiting";
+
+  // Common background grid style for panels with layout containment
+  const gridStyle = {
+    background: "#dee1e4",
+    backgroundImage:
+      "radial-gradient(rgba(0, 0, 0, 0.12) 1.3px, transparent 1.3px)",
+    backgroundSize: "80px 80px",
+  };
+
+  // GPU-accelerated letters entry (spring animation on translation and scale)
   const letterVariants = {
-    hidden: { y: "100%", opacity: 0, filter: "blur(10px)", rotateX: -45 },
+    hidden: { x: -12, opacity: 0, scale: 0.92, filter: "blur(4px)" },
     visible: (i: number) => ({
-      y: "0%",
+      x: 0,
       opacity: 1,
+      scale: 1,
       filter: "blur(0px)",
-      rotateX: 0,
       transition: {
         type: "spring" as const,
-        stiffness: 200,
-        damping: 20,
-        delay: 0.2 + i * 0.05,
+        stiffness: 160,
+        damping: 18,
+        delay: 0.1 + i * 0.03,
       },
     }),
   };
-
-  /* ── Curtain panel config ─────────────────────────────────────────────── */
-  const curtainTransition = {
-    duration: CURTAIN_DURATION,
-    ease: [0.76, 0, 0.24, 1] as const,
-  };
-
-  const isExiting = phase === "exiting";
 
   return (
     <motion.div
@@ -109,117 +99,110 @@ export default function LoadingScreen() {
         pointerEvents: isExiting ? "none" : "auto",
       }}
     >
-      {/* ── Left curtain panel ─────────────────────────────────────── */}
-      <motion.div
-        className="absolute top-0 left-0 w-1/2 h-full z-0 overflow-hidden flex justify-end"
-        style={{ background: "#050505" }}
-        initial={false}
-        animate={isExiting ? { x: "-100%" } : { x: "0%" }}
-        transition={curtainTransition}
-      >
-        <div className="absolute top-1/4 right-0 w-[60vw] h-[60vw] bg-[#1A4DFF]/10 rounded-full blur-[120px] translate-x-1/2" />
-        <div className="w-[1px] h-full bg-gradient-to-b from-transparent via-[#1A4DFF]/30 to-transparent" />
-      </motion.div>
+      {/* ── 4 STAGGERED GRID SHUTTER PANELS (GPU COMPOSITED) ────────── */}
+      {[0, 1, 2, 3].map((index) => {
+        const isUp = index % 2 === 0;
+        return (
+          <motion.div
+            key={index}
+            className="absolute top-0 h-full w-1/4 z-0 overflow-hidden will-change-transform"
+            style={{
+              ...gridStyle,
+              left: `${index * 25}%`,
+              borderRight: index < 3 ? "1px solid rgba(0, 0, 0, 0.04)" : "none",
+            }}
+            initial={{ y: "0%" }}
+            animate={isExiting ? { y: isUp ? "-100%" : "100%" } : { y: "0%" }}
+            transition={{
+              duration: CURTAIN_DURATION,
+              ease: [0.76, 0, 0.24, 1],
+              delay: index * 0.06, // Snappier stagger delay
+            }}
+          />
+        );
+      })}
 
-      {/* ── Right curtain panel ────────────────────────────────────── */}
-      <motion.div
-        className="absolute top-0 right-0 w-1/2 h-full z-0 overflow-hidden flex justify-start"
-        style={{ background: "#050505" }}
-        initial={false}
-        animate={isExiting ? { x: "100%" } : { x: "0%" }}
-        transition={curtainTransition}
-      >
-        <div className="absolute bottom-1/4 left-0 w-[60vw] h-[60vw] bg-violet-600/10 rounded-full blur-[120px] -translate-x-1/2" />
-        <div className="w-[1px] h-full bg-gradient-to-b from-transparent via-violet-500/30 to-transparent" />
-      </motion.div>
+      {/* ── SWEEPING SCAN LINE (GPU COMPOSITED) ─────────────────────── */}
+      {!isExiting && (
+        <motion.div
+          className="absolute left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#1A4DFF]/50 to-transparent z-10 pointer-events-none will-change-transform"
+          style={{ y: `${progress}vh`, top: 0 }}
+          transition={{ type: "tween", ease: "linear" }}
+        />
+      )}
 
-      {/* ── Content layer (fades out before curtains open) ────────── */}
+      {/* ── Content layer (fades out before shutter opens) ────────── */}
       <motion.div
         className="relative z-10 flex flex-col items-center justify-center w-full h-full select-none px-6 perspective-[1000px]"
         animate={
           isExiting
-            ? { opacity: 0, scale: 0.9, filter: "blur(10px)" }
+            ? { opacity: 0, scale: 0.98, filter: "blur(6px)" }
             : { opacity: 1, scale: 1, filter: "blur(0px)" }
         }
-        transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+        transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
       >
-        {/* ── GIANT BACKGROUND PERCENTAGE ───────────────────────────── */}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none z-0"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
+        {/* ── GIANT BACKGROUND PERCENTAGE (STRICT CONTAINMENT) ───────── */}
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 select-none overflow-hidden"
+          style={{ contain: "strict" }}
         >
           <span
             className="text-[40vw] font-bold tracking-tighter"
             style={{
               fontFamily: "var(--font-inter)",
               color: "transparent",
-              WebkitTextStroke: "1px rgba(255,255,255,0.04)",
+              WebkitTextStroke: "1px rgba(0,0,0,0.02)",
             }}
           >
             {progress}
           </span>
-        </motion.div>
+        </div>
 
         {/* ── Percentage counter ───────────────────────────────────── */}
-        <motion.div
-          className="absolute top-6 right-6 sm:top-8 sm:right-10 md:top-10 md:right-14 z-20 flex items-center gap-2"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 0.8, x: 0 }}
-          transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
-        >
+        <div className="absolute top-6 right-6 sm:top-8 sm:right-10 md:top-10 md:right-14 z-20 flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-[#1A4DFF] animate-pulse" />
           <span
             className="text-[clamp(0.7rem,1.2vw,1rem)] tracking-[0.25em] tabular-nums"
             style={{
               fontFamily: "var(--font-mono)",
-              color: "#ffffff",
+              color: "#111111",
             }}
           >
             {String(progress).padStart(3, "0")} %
           </span>
-        </motion.div>
+        </div>
 
         {/* ── Top-left corner marker ────────────────────────────────── */}
-        <motion.div
-          className="absolute top-6 left-6 sm:top-8 sm:left-10 md:top-10 md:left-14 z-20"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 0.5, x: 0 }}
-          transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-        >
+        <div className="absolute top-6 left-6 sm:top-8 sm:left-10 md:top-10 md:left-14 z-20">
           <span
             className="text-[9px] sm:text-[11px] tracking-[0.3em] uppercase"
             style={{
               fontFamily: "var(--font-mono)",
-              color: "#ffffff",
+              color: "#111111",
             }}
           >
             Portfolio © 2026
           </span>
-        </motion.div>
+        </div>
 
-        {/* ── Progress bar (sleek, glowing) ─────────────────────────── */}
+        {/* ── Progress bar (flat editorial line) ────────────────────── */}
         <div
           className="absolute bottom-16 sm:bottom-20 left-6 right-6 sm:left-10 sm:right-10 md:left-14 md:right-14 h-[2px] rounded-full overflow-hidden z-20"
-          style={{ background: "rgba(255,255,255,0.05)" }}
+          style={{ background: "rgba(0,0,0,0.05)" }}
         >
           <motion.div
-            className="h-full origin-left relative"
-            style={{ background: "linear-gradient(90deg, #1A4DFF 0%, #87CEFA 100%)" }}
+            className="h-full origin-left bg-[#1A4DFF]"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: progress / 100 }}
             transition={{ duration: 0.1, ease: "linear" }}
-          >
-            <div className="absolute top-0 right-0 h-full w-20 bg-white blur-[4px] rounded-full -translate-y-1/2 translate-x-1/2 opacity-80" />
-          </motion.div>
+          />
         </div>
 
-        {/* ── Name typography ───────────────────────────────────────── */}
+        {/* ── Name typography (GPU scale & entry) ────────────────────── */}
         <div className="flex flex-col items-center gap-0 sm:gap-1 md:gap-2 z-20">
           {/* Top line: UJJWAL */}
           <div className="overflow-hidden pb-2">
-            <div className="flex">
+            <div className="flex tracking-[-0.04em]">
               {NAME_TOP.split("").map((char, i) => (
                 <motion.span
                   key={`top-${i}`}
@@ -227,10 +210,11 @@ export default function LoadingScreen() {
                   variants={letterVariants}
                   initial="hidden"
                   animate="visible"
-                  className="inline-block text-[clamp(2.5rem,12vw,8rem)] font-medium tracking-[-0.04em] leading-none bg-clip-text text-transparent"
+                  className="inline-block text-[clamp(2.5rem,12vw,8rem)] font-medium leading-none bg-clip-text text-transparent will-change-transform"
                   style={{
                     fontFamily: "var(--font-inter)",
-                    backgroundImage: "linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.7) 100%)",
+                    backgroundImage:
+                      "linear-gradient(180deg, #111111 0%, #333333 100%)",
                   }}
                 >
                   {char}
@@ -241,7 +225,7 @@ export default function LoadingScreen() {
 
           {/* Bottom line: PRAKASH */}
           <div className="overflow-hidden pb-2">
-            <div className="flex">
+            <div className="flex tracking-[-0.04em]">
               {NAME_BOTTOM.split("").map((char, i) => (
                 <motion.span
                   key={`bottom-${i}`}
@@ -249,10 +233,11 @@ export default function LoadingScreen() {
                   variants={letterVariants}
                   initial="hidden"
                   animate="visible"
-                  className="inline-block text-[clamp(2.5rem,12vw,8rem)] font-light tracking-[-0.04em] leading-none bg-clip-text text-transparent"
+                  className="inline-block text-[clamp(2.5rem,12vw,8rem)] font-light leading-none bg-clip-text text-transparent will-change-transform"
                   style={{
                     fontFamily: "var(--font-inter)",
-                    backgroundImage: "linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 100%)",
+                    backgroundImage:
+                      "linear-gradient(180deg, #222222 0%, #555555 100%)",
                   }}
                 >
                   {char}
@@ -264,21 +249,21 @@ export default function LoadingScreen() {
           {/* ── Tagline ─────────────────────────────────────────────── */}
           <motion.div
             className="mt-6 sm:mt-8 md:mt-10 overflow-hidden flex items-center justify-center gap-4"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ delay: 1.0, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-[#1A4DFF]" />
+            <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-[#1A4DFF]/50" />
             <p
               className="text-[clamp(0.55rem,1.1vw,0.85rem)] tracking-[0.4em] sm:tracking-[0.5em] uppercase text-center"
               style={{
                 fontFamily: "var(--font-mono)",
-                color: "rgba(255,255,255,0.6)",
+                color: "rgba(0, 0, 0, 0.6)",
               }}
             >
               {TAGLINE}
             </p>
-            <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-violet-500" />
+            <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-[#1A4DFF]/50" />
           </motion.div>
         </div>
 
@@ -286,14 +271,14 @@ export default function LoadingScreen() {
         <motion.div
           className="absolute bottom-6 right-6 sm:bottom-8 sm:right-10 md:bottom-10 md:right-14 z-20"
           initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 0.4, x: 0 }}
-          transition={{ delay: 1.1, duration: 0.8, ease: "easeOut" }}
+          animate={{ opacity: 0.5, x: 0 }}
+          transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
         >
           <span
             className="text-[9px] sm:text-[11px] tracking-[0.3em] uppercase"
             style={{
               fontFamily: "var(--font-mono)",
-              color: "#ffffff",
+              color: "#111111",
             }}
           >
             IIT Kanpur • India
