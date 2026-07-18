@@ -27,7 +27,7 @@ export default function LoadingScreen() {
   }, [phase]);
 
   // Smooth counter via requestAnimationFrame
-  const tick = useCallback(() => {
+  const tick = useCallback(function animateProgress() {
     if (!startTimeRef.current) startTimeRef.current = performance.now();
     const elapsed = performance.now() - startTimeRef.current;
     const raw = Math.min(elapsed / LOADING_DURATION, 1);
@@ -38,7 +38,7 @@ export default function LoadingScreen() {
     setProgress(Math.round(eased * 100));
 
     if (raw < 1) {
-      rafRef.current = requestAnimationFrame(tick);
+      rafRef.current = requestAnimationFrame(animateProgress);
     } else {
       setTimeout(() => setPhase("exiting"), EXIT_DELAY);
     }
