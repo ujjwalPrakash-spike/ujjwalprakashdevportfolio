@@ -1,91 +1,263 @@
 "use client";
-
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
+import { ArrowUpRight } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import { LineShadowText } from "@/components/ui/line-shadow-text";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function AppleCardsCarouselDemo() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const title2Ref = useRef<HTMLSpanElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const title = titleRef.current;
+    const title2 = title2Ref.current;
+    const desc = descRef.current;
+    const carousel = carouselRef.current;
+
+    if (!container) return;
+
+    // Set initial states for clean fade and slide
+    gsap.set(container, { opacity: 0, scale: 0.98 });
+    if (title) gsap.set(title, { opacity: 0, y: 15 });
+    if (title2) gsap.set(title2, { opacity: 0, y: 15 });
+    if (desc) gsap.set(desc, { opacity: 0, y: 10 });
+    if (carousel) gsap.set(carousel, { opacity: 0, y: 20 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: "top bottom-=80px",
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    tl.to(container, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.4,
+      ease: "power2.out",
+    })
+      .to(
+        title,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.3,
+          ease: "power1.out",
+        },
+        "-=0.2"
+      )
+      .to(
+        title2,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.3,
+          ease: "power1.out",
+        },
+        "-=0.2"
+      )
+      .to(
+        desc,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.3,
+          ease: "power1.out",
+        },
+        "-=0.2"
+      )
+      .to(
+        carousel,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          ease: "power1.out",
+        },
+        "-=0.25"
+      );
+
+    ScrollTrigger.refresh();
+  }, []);
+
   const cards = data.map((card, index) => (
-    <Card key={card.src} card={card} index={index} />
+    <Card key={card.title + index} card={card} index={index} />
   ));
 
   return (
-    <div className="w-full h-full py-20">
-      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans">
-        Get to know your iSad.
-      </h2>
-      <Carousel items={cards} />
+    <div className="w-full pt-16 pb-8 md:pt-20 md:pb-10 border-t border-black/5 bg-transparent">
+      <div ref={containerRef} className="will-change-transform">
+        <div className="w-[87vw] mx-auto mb-10">
+          <div className="mb-6">
+            <span
+              ref={titleRef}
+              className="block font-bold text-[clamp(2.2rem,4vw,3.8rem)] leading-[0.95] tracking-[-0.04em] text-[#111111] font-sans"
+            >
+              Explore
+            </span>
+            <span
+              ref={title2Ref}
+              className="block font-bold text-[clamp(2.8rem,5vw,4.8rem)] leading-[0.95] tracking-[-0.04em] text-[#1A4DFF] mt-1 font-sans"
+            >
+              The{" "}
+              <LineShadowText className="text-[#1A4DFF] italic" shadowColor="#111111">
+                Portfolio
+              </LineShadowText>
+            </span>
+          </div>
+          <p
+            ref={descRef}
+            className="mt-3 text-[14px] leading-[1.7] text-[#2E3129] max-w-[500px]"
+          >
+            Explore sections of my work — from technical projects and research
+            to client experience, process, and reviews.
+          </p>
+        </div>
+        <div ref={carouselRef}>
+          <Carousel items={cards} />
+        </div>
+      </div>
     </div>
   );
 }
 
-const DummyContent = () => {
+/* ─── Expanded content with video + details + CTA ─────────────────────── */
+
+interface ContentProps {
+  videoSrc?: string;
+  description: string;
+  techStack: string[];
+  metrics?: { value: string; label: string }[];
+  ctaLabel: string;
+  ctaHref: string;
+}
+
+const ProjectContent = ({
+  videoSrc,
+  description,
+  techStack,
+  metrics,
+  ctaLabel,
+  ctaHref,
+}: ContentProps) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // Auto-play video when expanded content mounts
+    videoRef.current?.play().catch(() => {});
+  }, []);
+
   return (
-    <>
-      {[...new Array(3).fill(1)].map((_, index) => {
-        return (
-          <div
-            key={"dummy-content" + index}
-            className="bg-[#F5F5F7] dark:bg-neutral-800 p-8 md:p-14 rounded-3xl mb-4"
-          >
-            <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
-              <span className="font-bold text-neutral-700 dark:text-neutral-200">
-                The first rule of Apple club is that you boast about Apple club.
-              </span>{" "}
-              Keep a journal, quickly jot down a grocery list, and take amazing
-              class notes. Want to convert those notes to text? No problem.
-              Langotiya jeetu ka mara hua yaar is ready to capture every
-              thought.
-            </p>
-            <img
-              src="https://assets.aceternity.com/macbook.png"
-              alt="Macbook mockup from Aceternity UI"
-              height="500"
-              width="500"
-              className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain"
-            />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* Video — 50% of expanded content */}
+      {videoSrc && (
+        <div className="relative rounded-2xl overflow-hidden bg-black aspect-video">
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            muted
+            loop
+            playsInline
+            autoPlay
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+
+      {/* Details */}
+      <div className="flex flex-col justify-between">
+        <div>
+          <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-lg leading-relaxed">
+            {description}
+          </p>
+
+          {/* Tech Stack */}
+          <div className="flex flex-wrap gap-2 mt-6">
+            {techStack.map((tech) => (
+              <span
+                key={tech}
+                className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider bg-[#1A4DFF]/8 text-[#1A4DFF] rounded-full border border-[#1A4DFF]/15"
+              >
+                {tech}
+              </span>
+            ))}
           </div>
-        );
-      })}
-    </>
+
+          {/* Metrics */}
+          {metrics && metrics.length > 0 && (
+            <div className="grid grid-cols-2 gap-4 mt-8 pt-6 border-t border-black/5">
+              {metrics.map((m) => (
+                <div key={m.label}>
+                  <span className="text-2xl font-bold text-[#111] dark:text-white tracking-tight">
+                    {m.value}
+                  </span>
+                  <span className="block text-[11px] uppercase tracking-wider text-neutral-500 mt-1">
+                    {m.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* CTA */}
+        <a
+          href={ctaHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center gap-2 mt-8 px-6 py-3.5 bg-[#111] text-white rounded-xl font-medium text-[14px] hover:bg-[#1A4DFF] transition-colors duration-300 w-fit"
+        >
+          {ctaLabel}
+          <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+        </a>
+      </div>
+    </div>
   );
 };
 
+/* ─── Card data ───────────────────────────────────────────────────────── */
+
 const data = [
   {
-    category: "Artificial Intelligence",
-    title: "You can do more with AI.",
-    src: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=3556&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    content: <DummyContent />,
+    category: "Portfolio",
+    title: "Projects & Research Work",
+    src: "/images/media__1782064807098.png",
+    videoSrc: "/part1.mp4",
+    targetUrl: "/projects-research",
+    content: <div />,
   },
   {
-    category: "Productivity",
-    title: "Enhance your productivity.",
-    src: "https://images.unsplash.com/photo-1531554694128-c4c6665f59c2?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    content: <DummyContent />,
+    category: "Work",
+    title: "Experience & Leadership",
+    src: "/images/media__1782064946465.png",
+    videoSrc: "/part1.mp4",
+    targetUrl: "/experience",
+    content: <div />,
   },
   {
-    category: "Product",
-    title: "Launching the new Apple Vision Pro.",
-    src: "https://images.unsplash.com/photo-1713869791518-a770879e60dc?q=80&w=2333&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    content: <DummyContent />,
-  },
-
-  {
-    category: "Product",
-    title: "Maps for your iPhone 15 Pro Max.",
-    src: "https://images.unsplash.com/photo-1599202860130-f600f4948364?q=80&w=2515&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    content: <DummyContent />,
+    category: "Services",
+    title: "Client Process & Methodology",
+    src: "/images/coffee.jpg",
+    videoSrc: "/part1.mp4",
+    targetUrl: "/client-process",
+    content: <div />,
   },
   {
-    category: "iOS",
-    title: "Photography just got better.",
-    src: "https://images.unsplash.com/photo-1602081957921-9137a5d6eaee?q=80&w=2793&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    content: <DummyContent />,
-  },
-  {
-    category: "Hiring",
-    title: "Hiring for a Staff Software Engineer",
-    src: "https://images.unsplash.com/photo-1511984804822-e16ba72f5848?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    content: <DummyContent />,
+    category: "Testimonials",
+    title: "Client Reviews & Feedback",
+    src: "/images/media__1782064654883.png",
+    videoSrc: "/part1.mp4",
+    targetUrl: "/client-review",
+    content: <div />,
   },
 ];

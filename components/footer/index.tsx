@@ -3,12 +3,27 @@
 import React from "react";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import { FiExternalLink } from "react-icons/fi";
+
+const iconMap: Record<string, React.ReactNode> = {
+  Portfolio: <FiExternalLink className="w-[18px] h-[18px]" />,
+  Email: <MdEmail className="w-[18px] h-[18px]" />,
+  LinkedIn: <FaLinkedin className="w-[18px] h-[18px]" />,
+  GitHub: <FaGithub className="w-[18px] h-[18px]" />,
+};
+
+function FooterIcon({ label }: { label: string }) {
+  return <>{iconMap[label] ?? null}</>;
+}
+
 
 export default function Footer() {
   const { footer } = siteConfig;
 
   return (
-    <footer className="w-full relative z-10 pt-20 pb-0 overflow-hidden md:overflow-visible">
+    <footer className="w-full relative z-10 pt-10 pb-0 overflow-hidden md:overflow-visible">
       <div className="grid grid-cols-12 h-auto md:h-[280px] w-full px-10">
         
         {/* Brand & Copyright */}
@@ -30,19 +45,35 @@ export default function Footer() {
         </div>
 
         {/* Links */}
-        <div className="col-span-12 md:col-span-2 flex flex-col gap-3 pl-6 md:pl-8 h-full justify-end py-8 md:py-0 md:pb-10">
+        <div className="col-span-12 md:col-span-2 flex flex-col gap-4 pl-6 md:pl-8 h-full justify-end py-8 md:py-0 md:pb-10">
           {footer.links.map((link) => (
-            <Link key={link.label} href={link.href} className="text-[#1A4DFF] text-[16px] font-bold hover:opacity-70 transition-opacity tracking-tight w-fit">
-              {link.label}
+            <Link
+              key={link.label}
+              href={link.href}
+              title={link.label}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-[#1A4DFF] hover:opacity-70 transition-opacity w-fit group"
+            >
+              <FooterIcon label={link.label} />
+              <span className="text-[13px] font-semibold tracking-tight">{link.label}</span>
             </Link>
           ))}
         </div>
 
         {/* Socials */}
-        <div className="col-span-12 md:col-span-2 flex flex-col gap-3 pl-6 md:pl-8 h-full justify-end py-8 md:py-0 md:pb-10">
+        <div className="col-span-12 md:col-span-2 flex flex-col gap-4 pl-6 md:pl-8 h-full justify-end py-8 md:py-0 md:pb-10">
           {footer.socials.map((link) => (
-            <Link key={link.label} href={link.href} target="_blank" className="text-[#1A4DFF] text-[16px] font-bold hover:opacity-70 transition-opacity tracking-tight w-fit">
-              {link.label}
+            <Link
+              key={link.label}
+              href={link.href}
+              title={link.label}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-[#1A4DFF] hover:opacity-70 transition-opacity w-fit group"
+            >
+              <FooterIcon label={link.label} />
+              <span className="text-[13px] font-semibold tracking-tight">{link.label}</span>
             </Link>
           ))}
         </div>

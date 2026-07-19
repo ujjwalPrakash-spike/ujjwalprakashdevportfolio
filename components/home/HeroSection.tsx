@@ -125,7 +125,7 @@ export default function HeroSection() {
           {/* CENTER CTA */}
 
           <div className="col-span-12 md:col-start-3 md:col-span-4">
-            <a href="mailto:ujjwal24@iitk.ac.in" className="block w-full">
+            <a href="mailto:ujjwalprakash858@gmail.com" className="block w-full">
               <button className="relative group overflow-hidden w-full bg-transparent py-5 px-8 rounded-sm font-bold uppercase tracking-wide text-[17px] border-2 border-[#555555] text-[#2f2f2f] cursor-pointer">
                 <span className="absolute top-0 left-0 w-full h-full bg-[#313131] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-300 ease-out z-0"></span>
 

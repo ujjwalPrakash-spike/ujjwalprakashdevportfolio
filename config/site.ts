@@ -7,9 +7,9 @@ export const siteConfig = {
       line2: "IIT • KANPUR • INDIA",
     },
     links: [
-      { label: "Experience", href: "#experience" },
-      { label: "Projects", href: "#projects" },
-      { label: "Research", href: "#research" },
+      { label: "Experience", href: "/experience" },
+      { label: "Projects", href: "/projects-research" },
+      { label: "Client Process", href: "/client-process" },
     ],
     cta: {
       label: "Resume",
@@ -59,7 +59,7 @@ export const siteConfig = {
     creator: "Made with love by ujjwal.prakash",
     links: [
       { label: "Portfolio", href: "https://ujjwalprakash.netlify.app/" },
-      { label: "Email", href: "mailto:ujjwal24@iitk.ac.in" },
+      { label: "Email", href: "mailto:ujjwalprakash858@gmail.com" },
     ],
     socials: [
       {

@@ -13,11 +13,12 @@ import {
 } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
-import Image, { ImageProps } from "next/image";
+import { ImageProps } from "next/image";
 import { useOutsideClick } from "@/hooks/use-outside-click";
+import { useRouter } from "next/navigation";
 
 interface CarouselProps {
-  items: JSX.Element[];
+  items: React.ReactNode[];
   initialScroll?: number;
 }
 
@@ -26,14 +27,18 @@ type Card = {
   title: string;
   category: string;
   content: React.ReactNode;
+  videoSrc?: string;
+  targetUrl?: string;
 };
 
 export const CarouselContext = createContext<{
   onCardClose: (index: number) => void;
   currentIndex: number;
+  activeIndex: number;
 }>({
   onCardClose: () => {},
   currentIndex: 0,
+  activeIndex: 0,
 });
 
 export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
@@ -41,6 +46,36 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const checkActiveCard = () => {
+    if (carouselRef.current) {
+      const container = carouselRef.current;
+      const cardElements = container.querySelectorAll(".carousel-card-item");
+      if (cardElements.length === 0) return;
+
+      const firstCard = cardElements[0] as HTMLElement;
+      const cardWidth = firstCard.clientWidth;
+      const paddingLeft = window.innerWidth * 0.065;
+
+      const focusPoint = container.scrollLeft + paddingLeft + cardWidth / 2;
+
+      let closestIndex = 0;
+      let minDistance = Infinity;
+
+      cardElements.forEach((el, index) => {
+        const htmlEl = el as HTMLElement;
+        const cardCenter = htmlEl.offsetLeft + htmlEl.clientWidth / 2;
+        const distance = Math.abs(cardCenter - focusPoint);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setActiveIndex(closestIndex);
+    }
+  };
 
   useEffect(() => {
     if (carouselRef.current) {
@@ -48,6 +83,12 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
       checkScrollability();
     }
   }, [initialScroll]);
+
+  useEffect(() => {
+    checkActiveCard();
+    window.addEventListener("resize", checkActiveCard);
+    return () => window.removeEventListener("resize", checkActiveCard);
+  }, [items]);
 
   const checkScrollability = () => {
     if (carouselRef.current) {
@@ -59,53 +100,60 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
 
   const scrollLeft = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -300, behavior: "smooth" });
+      const cardElements = carouselRef.current.querySelectorAll(".carousel-card-item");
+      if (cardElements.length > 0) {
+        const cardWidth = (cardElements[0] as HTMLElement).clientWidth;
+        carouselRef.current.scrollBy({ left: -(cardWidth + 24), behavior: "smooth" });
+      }
     }
   };
 
   const scrollRight = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 300, behavior: "smooth" });
+      const cardElements = carouselRef.current.querySelectorAll(".carousel-card-item");
+      if (cardElements.length > 0) {
+        const cardWidth = (cardElements[0] as HTMLElement).clientWidth;
+        carouselRef.current.scrollBy({ left: cardWidth + 24, behavior: "smooth" });
+      }
     }
   };
 
   const handleCardClose = (index: number) => {
     if (carouselRef.current) {
-      const cardWidth = isMobile() ? 230 : 384; // (md:w-96)
-      const gap = isMobile() ? 4 : 8;
-      const scrollPosition = (cardWidth + gap) * (index + 1);
-      carouselRef.current.scrollTo({
-        left: scrollPosition,
-        behavior: "smooth",
-      });
+      const cardElements = carouselRef.current.querySelectorAll(".carousel-card-item");
+      if (cardElements.length > index) {
+        const targetCard = cardElements[index] as HTMLElement;
+        const paddingLeft = window.innerWidth * 0.065;
+        carouselRef.current.scrollTo({
+          left: targetCard.offsetLeft - paddingLeft,
+          behavior: "smooth",
+        });
+      }
       setCurrentIndex(index);
     }
   };
 
-  const isMobile = () => {
-    return window && window.innerWidth < 768;
-  };
-
   return (
     <CarouselContext.Provider
-      value={{ onCardClose: handleCardClose, currentIndex }}
+      value={{ onCardClose: handleCardClose, currentIndex, activeIndex }}
     >
       <div className="relative w-full">
+        {/* Smooth Gradient Masks to match background color */}
+        <div className="absolute left-0 top-0 bottom-0 w-[3vw] bg-gradient-to-r from-[#dee1e4] via-[#dee1e4]/30 to-transparent z-30 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-[3vw] bg-gradient-to-l from-[#dee1e4] via-[#dee1e4]/30 to-transparent z-30 pointer-events-none" />
+
         <div
-          className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth py-10 [scrollbar-width:none] md:py-20"
+          className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth py-10 [scrollbar-width:none]"
           ref={carouselRef}
-          onScroll={checkScrollability}
+          onScroll={() => {
+            checkScrollability();
+            checkActiveCard();
+          }}
         >
           <div
             className={cn(
-              "absolute right-0 z-[1000] h-auto w-[5%] overflow-hidden bg-gradient-to-l",
-            )}
-          ></div>
-
-          <div
-            className={cn(
-              "flex flex-row justify-start gap-4 pl-4",
-              "mx-auto max-w-7xl", // remove max-w-4xl if you want the carousel to span the full width of its container
+              "flex flex-row justify-start gap-6 px-[6.5vw]",
+              "w-fit",
             )}
           >
             {items.map((item, index) => (
@@ -119,19 +167,19 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
                   y: 0,
                   transition: {
                     duration: 0.5,
-                    delay: 0.2 * index,
+                    delay: 0.1 * index,
                     ease: "easeOut",
                   },
                 }}
                 key={"card" + index}
-                className="rounded-3xl last:pr-[5%] md:last:pr-[33%]"
+                className="rounded-3xl carousel-card-item"
               >
                 {item}
               </motion.div>
             ))}
           </div>
         </div>
-        <div className="mr-10 flex justify-end gap-2">
+        <div className="flex justify-end gap-2 mt-4 px-[6.5vw]">
           <button
             className="relative z-40 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
             onClick={scrollLeft}
@@ -163,7 +211,10 @@ export const Card = ({
 }) => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { onCardClose, currentIndex } = useContext(CarouselContext);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const { onCardClose, activeIndex } = useContext(CarouselContext);
+  const isActive = index === activeIndex;
+  const router = useRouter();
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -182,7 +233,30 @@ export const Card = ({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
-  useOutsideClick(containerRef, () => handleClose());
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isActive && !open) {
+        videoRef.current.play().catch(() => {});
+      } else {
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
+      }
+    }
+  }, [isActive, open]);
+
+  useOutsideClick(containerRef as React.RefObject<HTMLDivElement>, () => handleClose());
+
+  const handleClick = () => {
+    if (!isActive) {
+      onCardClose(index);
+      return;
+    }
+    if (card.targetUrl) {
+      setTimeout(() => {
+        router.push(card.targetUrl as string);
+      }, 150);
+    }
+  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -237,8 +311,22 @@ export const Card = ({
       </AnimatePresence>
       <motion.button
         layoutId={layout ? `card-${card.title}` : undefined}
-        onClick={handleOpen}
-        className="relative z-10 flex h-80 w-56 flex-col items-start justify-start overflow-hidden rounded-3xl bg-gray-100 md:h-[40rem] md:w-96 dark:bg-neutral-900"
+        onClick={handleClick}
+        animate={{
+          scale: isActive ? 1.0 : 0.95,
+          opacity: isActive ? 1.0 : 0.35,
+          filter: isActive ? "blur(0px)" : "blur(3px)",
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 120,
+          damping: 20,
+          mass: 1,
+        }}
+        className={cn(
+          "relative z-10 flex h-[350px] w-[72vw] flex-col items-start justify-start overflow-hidden rounded-3xl bg-gray-100 md:h-[580px] md:w-[72vw] dark:bg-neutral-900 transition-all duration-500 ease-out transform-gpu",
+          isActive ? "z-20 shadow-xl" : "z-10 shadow-sm"
+        )}
       >
         <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full bg-gradient-to-b from-black/50 via-transparent to-transparent" />
         <div className="relative z-40 p-8">
@@ -255,12 +343,35 @@ export const Card = ({
             {card.title}
           </motion.p>
         </div>
-        <BlurImage
-          src={card.src}
-          alt={card.title}
-          fill
-          className="absolute inset-0 z-10 object-cover"
-        />
+        {card.videoSrc ? (
+          <>
+            {/* Solid dark base — shows cleanly when video is not playing */}
+            <div className="absolute inset-0 z-0 bg-[#111111]" />
+            <motion.video
+              ref={videoRef}
+              src={card.videoSrc}
+              poster={card.src}
+              preload="auto"
+              muted
+              loop
+              playsInline
+              animate={{ opacity: isActive ? 1 : 0 }}
+              transition={
+                isActive
+                  ? { duration: 0.5, ease: "easeIn" }
+                  : { duration: 0 }
+              }
+              className="absolute inset-0 z-10 h-full w-full object-cover"
+            />
+          </>
+        ) : (
+          <BlurImage
+            src={card.src}
+            alt={card.title}
+            fill
+            className="absolute inset-0 z-10 object-cover"
+          />
+        )}
       </motion.button>
     </>
   );
@@ -289,7 +400,7 @@ export const BlurImage = ({
       loading="lazy"
       decoding="async"
       blurDataURL={typeof src === "string" ? src : undefined}
-      alt={alt ? alt : "Background of a beautiful view"}
+      alt={alt ? alt : "Background of a view"}
       {...rest}
     />
   );
