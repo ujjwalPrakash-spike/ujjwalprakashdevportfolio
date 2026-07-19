@@ -9,23 +9,23 @@ import { MessageSquare, Briefcase, CheckCircle2 } from "lucide-react";
 
 const notifications = [
   {
-    title: "Client Inquiry",
-    description: "Hey! What are your requirements?",
+    title: "Student Review",
+    description: `"I like how Ujjwal teaches, he puts in the work required..."`,
     time: "Just now",
     icon: <MessageSquare className="w-4 h-4 text-white" />,
     badgeColor: "#1A4DFF",
   },
   {
-    title: "Freelance Project",
-    description: "System architecture and Next.js setup.",
-    time: "10m ago",
+    title: "Production Scale",
+    description: "Maintaining 37K+ LOC codebase for 20,000+ active users.",
+    time: "Active",
     icon: <Briefcase className="w-4 h-4 text-white" />,
     badgeColor: "#2E3129",
   },
   {
-    title: "Milestone Reached",
-    description: "Production codebase deployed successfully. 🎉",
-    time: "1h ago",
+    title: "Internal Tool",
+    description: "PIMS built ahead of schedule. 2K+ daily active users.",
+    time: "On Time",
     icon: <CheckCircle2 className="w-4 h-4 text-white" />,
     badgeColor: "#10B981",
   },
@@ -114,17 +114,17 @@ export default function HeroSection() {
         {/* FOOTER */}
         <div className="grid grid-cols-12 items-center gap-y-8 gap-x-6 mt-10">
           {/* LEFT */}
-          <div className="flex items-center gap-2 whitespace-nowrap">
-            <span className="font-bold text-[14px]">{hero.footerPrefix}</span>
+          <div className="col-span-12 md:col-span-2 flex items-center gap-1.5 whitespace-nowrap">
+            <span className="font-bold text-[13px]">{hero.footerPrefix}</span>
 
-            <span className="text-[12px] text-[#111111]">
+            <span className="text-[11px] tracking-tight text-[#111111]">
               {hero.footerText}
             </span>
           </div>
 
           {/* CENTER CTA */}
 
-          <div className="col-span-12  md:col-start-3 md:col-span-4">
+          <div className="col-span-12 md:col-start-3 md:col-span-4">
             <button className="relative group overflow-hidden w-full bg-transparent py-5 px-8 rounded-sm font-bold uppercase tracking-wide text-[17px] border-2 border-[#555555] text-[#2f2f2f]">
               <span className="absolute top-0 left-0 w-full h-full bg-[#313131] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-300 ease-out z-0"></span>
 
@@ -145,21 +145,24 @@ export default function HeroSection() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -15, scale: 0.98 }}
                   transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="absolute inset-0 flex items-center gap-3 p-3 rounded-lg bg-[#1A4DFF] text-white shadow-md border border-blue-600/20"
+                  className="absolute inset-0 flex items-center gap-3 p-3 rounded-xl bg-white/30 backdrop-blur-md text-[#2E3129] border border-black/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.04)]"
                 >
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-white/15">
+                  <div
+                    className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: notifications[currentIndex].badgeColor }}
+                  >
                     {notifications[currentIndex].icon}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-[11px] font-bold text-white truncate">
+                      <span className="text-[11px] font-bold text-[#2E3129] truncate">
                         {notifications[currentIndex].title}
                       </span>
-                      <span className="text-[9px] text-white/60 whitespace-nowrap">
+                      <span className="text-[9px] text-[#888888] whitespace-nowrap">
                         {notifications[currentIndex].time}
                       </span>
                     </div>
-                    <p className="text-[10px] text-white/80 leading-snug mt-0.5">
+                    <p className="text-[10px] text-[#555555] leading-snug mt-0.5">
                       {notifications[currentIndex].description}
                     </p>
                   </div>

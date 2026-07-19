@@ -19,17 +19,17 @@ export const siteConfig = {
 
   home: {
     hero: {
-      titleLine1: "Full-Stack Engineer",
-      titleLine2: "& Research Author",
+      titleLine1: "Full-Stack Lead",
+      titleLine2: "& Tech Instructor",
       titleHighlight: "Co-author",
 
       footerPrefix: "IITK.",
-      footerText: "Core Engineer",
+      footerText: "30K+ Users System Lead",
 
       cta: "VIEW PROJECTS",
 
       descriptionInfo:
-        "High-performing Full-Stack Engineer and Research Co-author architecting scalable, high-concurrency systems.",
+        "Leading 4 developers on a 30K+ user platform. Rated 4.8/5.0 for teaching full-stack engineering.",
     },
 
     description: {
@@ -44,9 +44,9 @@ export const siteConfig = {
       titleLine1: "Client Projects",
       titleLine2: "Services Guide",
       description:
-        "A detailed guide covering my freelance services, technical stack, architecture workflow, and how I help clients build high-concurrency systems.",
+        "How I build software. A breakdown of my technical stack, architecture choices, and engineering processes for clients who need backend scale.",
       ctaLabel: "Read the Guide",
-      ctaHref: "#",
+      ctaHref: "/services_guide.pdf",
       ctaSublabel: ".PDF",
       imagePath: "/images/coffee.jpg",
     },

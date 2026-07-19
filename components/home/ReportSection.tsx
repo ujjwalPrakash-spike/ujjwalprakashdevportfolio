@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { siteConfig } from "@/config/site";
+import { LineShadowText } from "@/components/ui/line-shadow-text";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -138,7 +139,10 @@ export default function ReportSection() {
               ref={title2Ref}
               className="block font-bold text-[clamp(2.8rem,5vw,4.8rem)] leading-[0.95] tracking-[-0.04em] text-[#1A4DFF] mt-1"
             >
-              {report.titleLine2}
+              Services{" "}
+              <LineShadowText className="text-[#1A4DFF]" shadowColor="#111111">
+                Guide
+              </LineShadowText>
             </span>
           </div>
 
@@ -153,9 +157,11 @@ export default function ReportSection() {
             </p>
 
             {/* Action Card Button */}
-            <Link
+            <a
               ref={ctaRef}
               href={report.ctaHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group relative flex flex-col justify-between w-full sm:w-[210px] h-[130px] p-5 rounded-2xl border border-black/10 bg-transparent hover:bg-black/5 hover:border-black/20 transition-all duration-300 shrink-0 cursor-pointer"
             >
               {/* Format Indicator */}
@@ -172,7 +178,7 @@ export default function ReportSection() {
                   <ArrowUpRight className="w-4 h-4 text-[#1A4DFF] group-hover:text-white transition-colors duration-300" />
                 </div>
               </div>
-            </Link>
+            </a>
           </div>
         </div>
       </div>

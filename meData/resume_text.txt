@@ -1,0 +1,170 @@
+Ujjwal Prakash
+Kanpur, India | ujjwal24@iitk.ac.in | +91-7763980774 | Portfolio | GitHub | LinkedIn
+
+
+
+Professional Summary
+High-performing Full-Stack Engineer, Research Co-author, and Technical Instructor with a proven track record of
+architecting scalable, high-concurrency systems. Promoted to Senior Software Engineer & Team Lead for the official IIT
+Kanpur placement portal (RAS), managing a team of 4 developers and a 37K+ line production codebase for 20,000+
+students. Co-authored peer-reviewed deep learning research for ISRO, accepted for a prestigious oral presentation at
+IEEE IGARSS 2026. Expert in Go, Node.js, and React/Next.js, delivering high-availability cloud applications with
+99.9% uptime.
+
+
+
+Education
+Indian Institute of Technology (IIT), Kanpur | B.Tech in Biological Science and Bioengineering | Expected: May
+2028 - Cumulative Performance Index (CPI): 6.7 / 10.0 - Relevant Coursework: Algorithms & Data Structures,
+Programming Concepts, Computational Methods - Certifications: Data Structures & Algorithms (Udemy)
+Aklank Public School, Kota | CBSE (XII) | 2024 - Aggregate Percentage: 82.0%
+Holy Cross School | CBSE (X) | 2022 - Aggregate Percentage: 94.0%
+
+
+
+Research & Publications
+Co-author | IEEE IGARSS 2026, Washington D.C. | May 2026 - TRINETRA: Text-Guided Remote-Sensing
+Interpretation via Ensemble-Based Transformers - Developed a novel vision-language ensemble framework in
+collaboration with the Indian Space Research Organisation (ISRO). - Engineered the full-stack system architecture,
+real-time database sync, and low-latency API integrations to interface with the core Vision-Language Models. -
+Accepted as a prestigious Oral Presentation (Session WE3.R15: Vision-Language Models for Remote Sensing) at the
+flagship IEEE International Geoscience and Remote Sensing Symposium.
+
+
+
+Experience
+RAS (IITK Placement Portal) | Senior Software Engineer & Team Lead | Kanpur, India | Aug 2024 – Present -
+Engineering Leadership: Promoted to Lead Engineer to oversee full system architecture and maintain a 37,000+
+line production codebase (Go/Gin, Next.js, PostgreSQL, Docker) serving 20,000+ students and top-tier recruiters
+(Google, Microsoft, Tower Research Capital, Optiver, JPMC). - Team Management: Direct and mentor 4 junior
+developers, accelerating feature delivery by 25% and reducing post-deployment bugs by 35% through standardized
+code reviews and design sessions. - Automated QR System: Spearheaded the design and development of an
+institutional QR-based attendance tracking app, integrating it with RAS portal APIs to dynamically sync data for
+20,000+ students; mentored 4 engineers during development and coordinated training sessions for 50+ stakeholders
+on system operations. - System Stability: Resolved critical departmental eligibility and resume-tagging microservice
+bottlenecks, securing 99.9% uptime and sub-200ms page loads during peak traffic surges. - Resume Tagging
+Microservice: Designed and implemented a resume-tagging service, enabling students to apply to different companies
+and roles using role-specific resumes. - System Operations: Function as primary on-call engineer, implementing
+secure API gateways, deploying zero-downtime hotfixes for high-stakes placement operations, and optimizing the
+portal’s email notification service to reduce delivery failures. - Technical Support: Provided direct technical support
+to recruiters and students, diagnosing production issues and rolling out hotfixes under real-time constraints.
+PhD Placement Portal | Software Engineer | IIT Kanpur | 2024 – Present - API Development: Architected
+clean backend APIs and relational database schemas matching PhD candidates with corporate R&D sectors. -
+Stakeholder Collaboration: Translated academic recruitment policies into secure, multi-role access controls and
+
+
+
+                                                          1
+workflows. - System Maintenance: Developed and maintained core features of the production platform, fixing bugs
+and implementing feature updates in a live environment.
+Freelance Developer | Self-Employed | 2024 – Present - Scalable Application Delivery: Currently engineering a
+web application designed to scale for 50,000+ users for an external client. - End-to-End Solutions: Delivered
+multiple full-stack web applications, independently managing requirements elicitation, system architecture, database
+design, and production deployment. - Tech Stack & Deployment: Developed high-performance backends (Go,
+Node.js) and modern frontends (Next.js) with clean REST APIs; deployed and maintained production systems using
+Docker. - Client Collaboration: Handled direct client communications, project scoping, milestone tracking, and
+post-delivery system maintenance.
+SPO (Students’ Placement Office), IIT Kanpur | Web Executive | Kanpur, India | 2024 – 2025 - Core Modules:
+Engineered and deployed core Next.js frontend modules, improving Google Lighthouse performance score to 95+ and
+increasing organic search traffic by 25%. - Type Safety: Architected a type-safe TypeScript migration, reducing
+runtime production exceptions by 45% and accelerating development velocity. - UI/UX & Navigation: Redesigned
+the navigation architecture and UI, reducing recruiter drop-off by 30% and shortening job posting creation times by
+20%. - Performance Optimization: Enhanced frontend responsiveness and accessibility, ensuring compatibility
+across diverse device architectures.
+
+
+
+Projects
+SPO Critical Incident Investigation | Security Forensics & Incident Response - Incident Management: Co-led
+the end-to-end investigation and root cause analysis of a critical system incident, authoring a comprehensive post-
+mortem report. - Security Forensics: Employed advanced forensic techniques and detailed log analysis to successfully
+track down and identify the specific user responsible for the anomaly. - Preventive Architecture: Designed and
+implemented new security protocols and validation checks to mitigate future risks and ensure long-term system integrity.
+ISRO Satellite Image Analysis Platform (TRINETRA) | Python, FastAPI, Flask, Next.js, TypeScript, Supabase,
+Modal, Qwen-VL, LLaMA 3.1 - Designed and built an end-to-end satellite image analysis platform using VLMs,
+YOLO-OBB, and SAM, supporting captioning, grounding, and multi-type VQA. - Won the Silver Medal at Inter
+IIT Tech Meet 14.0 for the ISRO problem statement (out of 100+ teams). - Architected a two-layer backend: Flask
+orchestration + GPU-hosted FastAPI inference on Modal, enabling scalable and modular ML serving. - Optimised
+inference pipelines with LoRA fine-tuned Qwen-VL, LLaMA 3.1, and 4-bit quantisation, balancing latency and GPU
+memory usage. - Developed a Next.js + TypeScript frontend with real-time chat, geospatial comparison, and map-based
+analysis; integrated Supabase for storage, authentication, and real-time database sync.
+Placement Interview Management System (PIMS) | Go, Gin, Next.js, PostgreSQL, Docker, Nginx - Architected
+and deployed a real-time interview operations platform to replace manual, Excel-based workflows, achieving immediate
+adoption by 1,000 - 2,000 daily active users from day one. - Engineered a Global Availability Engine with real-time
+conflict detection and seamless RAS portal sync, eliminating data silos and saving the organization 100s of hours in
+manual operational overhead daily. - Mentored 4 engineers through the full development lifecycle while coordinating
+training sessions for 50+ placement coordinators and faculty on system operations.
+Research Lab Portal | NestJS, Prisma ORM, PostgreSQL, AWS, React, Tailwind CSS, TypeScript | Ongoing -
+Architecting a centralized portal/ecosystem to automate research lab applications, designing the system to support a
+30,000+ campus community across IIT Kanpur. - Designing relational data models using Prisma ORM to guarantee
+referential integrity, optimizing database indexing to reduce local query latency to sub-100ms (a 40% speedup). -
+Implementing a scalable cloud infrastructure using AWS for deployment and Supabase for real-time synchronization
+and authentication. - Developing a high-fidelity, responsive frontend using Tailwind CSS and TypeScript, prioritizing
+professional UI/UX standards to ensure a seamless experience for academic stakeholders.
+Cipher — AI-Powered Productivity OS | Next.js, React, TypeScript, PostgreSQL, Docker, GitHub Actions -
+Engineering a personal productivity platform with task management, goal tracking, focus modes, and mood boards —
+designed around individual workflows. - Integrating an LLM pipeline that accepts natural-language feature descriptions,
+generates production-ready code, and auto-deploys via a CI/CD pipeline on merge — zero manual intervention from
+describe to deploy. - Building a REST API with proper auth, environment management, and secrets handling for a
+fully self-hosted production deployment.
+2D Battle Arena — Real-Time Multiplayer Combat Game | Go, WebSockets, TypeScript, Canvas API, Redis,
+PostgreSQL - Implementing a fixed-timestep authoritative game loop in Go that syncs player position, health, and
+
+
+                                                           2
+combat actions across all connected clients in real time. - Building a Canvas-based renderer with client-side prediction
+and server reconciliation to mask network latency and deliver smooth 60fps gameplay. - Engineering robust WebSocket
+connection lifecycle handling — graceful drops, automatic reconnection, and state recovery — optimized for sub-50ms
+round-trip latency.
+RAS.DEVCAMP Portal | Next.js 16, React 19, TypeScript, Tailwind CSS 4, Lenis, Netlify - Built the course
+portal for a 10-week full-stack bootcamp at IIT Kanpur SPO, serving 57+ enrolled students with week-by-week
+curriculum modules, structured assignment specs with multi-part rubrics, a curated resource library, and a live cohort
+tracker with deduplication logic. - Designed a premium editorial-style UI with glassmorphic announcement cards, Lenis
+smooth-scrolling, responsive sidebar navigation, and animated micro-interactions — all hand-built without component
+libraries. Deployed on Netlify with automated builds.
+
+
+
+Technical Skills
+  • Programming Languages: Go, TypeScript, JavaScript, Python, C, C++, R, CSS, HTML
+  • Backend & Cloud: Node.js, Express, NestJS, Gin (Go), Fastify, FastAPI, Flask, Prisma ORM, AWS, Supabase,
+    Docker, RESTful APIs, WebSockets, Redis, Modal
+  • Frontend & Design: React, Next.js (Next.js 16, React 19), Tailwind CSS (Tailwind CSS 4), Lenis, Canvas API
+  • Databases: PostgreSQL, MongoDB
+  • Developer Tools & ML: Git, GitHub Actions, Nginx, PyTorch/Deep Learning (VLM integration), YOLO-OBB,
+    SAM
+
+
+
+Leadership & Achievements
+  • RAS.DEVCAMP — Full-Stack Developer Bootcamp, IIT Kanpur SPO | Instructor & Curriculum
+    Designer | Jan 2026 – Present
+      – Designed and delivered a 10-week full-stack/backend engineering bootcamp under IIT Kanpur’s Students’
+         Placement Office, enrolling 57+ students (100 undergraduate students total across programs).
+      – Delivered 12+ lectures teaching core backend and full-stack concepts from JavaScript/Go fundamentals
+         through Docker, WebSockets, and CI/CD, with live coding sessions and real-time Q&A.
+      – Provided hands-on mentorship through structured assignments with multi-part grading rubrics, debugging
+         sessions, and one-on-one support to help students ship capstone projects end-to-end (including Cipher and
+         2D Battle Arena).
+  • ACA (Association for Computing Activities) Summer Project, IIT Kanpur | Project Mentor | Summer
+    2026
+      – Mentored 20 undergraduate students in building end-to-end full-stack applications (including Cipher
+         and 2D Battle Arena) live on the internet; successfully reviewed and ratified all project completions.
+      – Designed a curriculum focused on web foundation basics, Node/Express, Go backend game loops, WebSockets,
+         Git, databases, Docker, and CI/CD pipelines.
+  • Astronomy Club, IIT Kanpur | Secretary | 2024 – 2025
+      – Managed club operations, directed astronomy observation camps, and mentored an intensive summer research
+         project for 15 students.
+  • Prayas (IITK Social Initiative) | Volunteer English Teacher | 2024 – Present
+      – Taught English and fundamental academics to Class 6 students under IIT Kanpur’s student-run educational
+         outreach program.
+  • Scholastic Achievements & Competitions:
+      – Silver Medalist: Inter IIT Tech Meet 14.0 for the ISRO Satellite Image Analysis problem statement (out
+         of 100+ teams).
+      – State-level Qualifier: Rank 8 in the International Mathematics Olympiad (IMO).
+
+
+
+
+                                                           3
+
