@@ -167,13 +167,15 @@ const ProjectContent = ({
         <div className="relative rounded-2xl overflow-hidden bg-black  aspect-video">
           <video
             ref={videoRef}
-            src={videoSrc}
             muted
             loop
             playsInline
             autoPlay
             className="w-full h-full object-cover"
-          />
+          >
+            <source src={videoSrc} type="video/webm" />
+            <source src={videoSrc.replace(".webm", ".mp4")} type="video/mp4" />
+          </video>
         </div>
       )}
 

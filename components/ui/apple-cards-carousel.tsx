@@ -216,6 +216,7 @@ export const Card = ({
   const { onCardClose, activeIndex } = useContext(CarouselContext);
   const isActive = index === activeIndex;
   const router = useRouter();
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -237,10 +238,12 @@ export const Card = ({
   useEffect(() => {
     if (videoRef.current) {
       if (isActive && !open) {
+        setIsVideoPlaying(false);
         videoRef.current.play().catch(() => {});
       } else {
         videoRef.current.pause();
         videoRef.current.currentTime = 0;
+        setIsVideoPlaying(false);
       }
     }
   }, [isActive, open]);
@@ -346,24 +349,31 @@ export const Card = ({
         </div>
         {card.videoSrc ? (
           <>
-            {/* Solid dark base — shows cleanly when video is not playing */}
-            <div className="absolute inset-0 z-0 bg-[#111111]" />
+            {/* Base preview image — always visible when video is not playing or loading */}
+            <BlurImage
+              src={card.src}
+              alt={card.title}
+              fill
+              className="absolute inset-0 z-0 object-cover"
+            />
             <motion.video
               ref={videoRef}
-              src={card.videoSrc}
-              poster={card.src}
               preload="auto"
               muted
               loop
               playsInline
-              animate={{ opacity: isActive ? 1 : 0 }}
+              onPlaying={() => setIsVideoPlaying(true)}
+              animate={{ opacity: (isActive && isVideoPlaying) ? 1 : 0 }}
               transition={
                 isActive
                   ? { duration: 0.5, ease: "easeIn" }
                   : { duration: 0 }
               }
               className="absolute inset-0 z-10 h-full w-full object-cover"
-            />
+            >
+              <source src={card.videoSrc} type="video/webm" />
+              <source src={card.videoSrc.replace(".webm", ".mp4")} type="video/mp4" />
+            </motion.video>
           </>
         ) : (
           <BlurImage
