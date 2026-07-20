@@ -348,33 +348,17 @@ export const Card = ({
           </motion.p>
         </div>
         {card.videoSrc ? (
-          <>
-            {/* Base preview image — always visible when video is not playing or loading */}
-            <BlurImage
-              src={card.src}
-              alt={card.title}
-              fill
-              className="absolute inset-0 z-0 object-cover"
-            />
-            <motion.video
-              ref={videoRef}
-              preload="auto"
-              muted
-              loop
-              playsInline
-              onPlaying={() => setIsVideoPlaying(true)}
-              animate={{ opacity: (isActive && isVideoPlaying) ? 1 : 0 }}
-              transition={
-                isActive
-                  ? { duration: 0.5, ease: "easeIn" }
-                  : { duration: 0 }
-              }
-              className="absolute inset-0 z-10 h-full w-full object-cover"
-            >
-              <source src={card.videoSrc} type="video/webm" />
-              <source src={card.videoSrc.replace(".webm", ".mp4")} type="video/mp4" />
-            </motion.video>
-          </>
+          <video
+            ref={videoRef}
+            preload="auto"
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 h-full w-full object-cover"
+          >
+            <source src={card.videoSrc} type="video/webm" />
+            <source src={card.videoSrc.replace(".webm", ".mp4")} type="video/mp4" />
+          </video>
         ) : (
           <BlurImage
             src={card.src}
