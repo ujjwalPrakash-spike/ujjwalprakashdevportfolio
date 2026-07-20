@@ -6,6 +6,7 @@ import { siteConfig } from "@/config/site";
 import RotatingText from "@/components/reactBits/RotatingText";
 import { AnimatePresence, motion } from "framer-motion";
 import { MessageSquare, Briefcase, CheckCircle2 } from "lucide-react";
+import BookingModal from "./BookingModal";
 
 const notifications = [
   {
@@ -34,6 +35,7 @@ const notifications = [
 export default function HeroSection() {
   const { hero } = siteConfig.home;
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -125,15 +127,16 @@ export default function HeroSection() {
           {/* CENTER CTA */}
 
           <div className="col-span-12 md:col-start-3 md:col-span-4">
-            <a href="mailto:ujjwalprakash858@gmail.com" className="block w-full">
-              <button className="relative group overflow-hidden w-full bg-transparent py-5 px-8 rounded-sm font-bold uppercase tracking-wide text-[17px] border-2 border-[#555555] text-[#2f2f2f] cursor-pointer">
-                <span className="absolute top-0 left-0 w-full h-full bg-[#313131] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-300 ease-out z-0"></span>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="relative group overflow-hidden w-full bg-transparent py-5 px-8 rounded-sm font-bold uppercase tracking-wide text-[17px] border-2 border-[#555555] text-[#2f2f2f] cursor-pointer"
+            >
+              <span className="absolute top-0 left-0 w-full h-full bg-[#313131] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-300 ease-out z-0"></span>
 
-                <span className="relative z-10 flex items-center justify-center gap-3 w-full h-full group-hover:text-white transition-colors duration-300">
-                  {hero.cta}
-                </span>
-              </button>
-            </a>
+              <span className="relative z-10 flex items-center justify-center gap-3 w-full h-full group-hover:text-white transition-colors duration-300">
+                {hero.cta}
+              </span>
+            </button>
           </div>
 
           {/* RIGHT */}
@@ -182,6 +185,14 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
+      <AnimatePresence>
+        {isModalOpen && (
+          <BookingModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
