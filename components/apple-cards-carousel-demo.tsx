@@ -157,7 +157,6 @@ const ProjectContent = ({
   useEffect(() => {
     // Auto-play video when expanded content mounts
     videoRef.current?.play().catch(() => {});
-    z;
   }, []);
 
   return (
