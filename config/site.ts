@@ -38,7 +38,7 @@ export const siteConfig = {
         "scalable, high-concurrency systems and delivering high-availability cloud applications",
       p1End: " with 99.9% uptime.",
 
-      p2: "Promoted to Senior Software Engineer & Team Lead for the official IIT Kanpur placement portal (RAS), managing a team of 4 developers and a 37K+ line production codebase for 20,000+ students. Co-authored peer-reviewed deep learning research for ISRO, accepted for an oral presentation at IEEE IGARSS 2026.",
+      p2: "Promoted to Senior Software Engineer & Team Lead for the official IIT Kanpur placement portal (RAS), managing a team of 4 developers and a 37K+ line production codebase for 20,000+ students. Co-authored peer-reviewed deep learning research with ISRO, accepted for an oral presentation at IEEE IGARSS 2026.",
     },
     report: {
       titleLine1: "Client Projects",

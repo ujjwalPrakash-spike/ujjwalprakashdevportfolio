@@ -27,7 +27,7 @@ export default function DescriptionSection() {
             </TextRevealHighlighted>{" "}
             <TextRevealWords startIndex={28}>
               for 20,000+ students. Co-authored peer-reviewed deep learning
-              research for ISRO, accepted for an oral presentation at IEEE
+              research with ISRO, accepted for an oral presentation at IEEE
               IGARSS 2026.
             </TextRevealWords>
           </TextRevealBlock>

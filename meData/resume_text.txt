@@ -7,7 +7,7 @@ Professional Summary
 High-performing Full-Stack Engineer, Research Co-author, and Technical Instructor with a proven track record of
 architecting scalable, high-concurrency systems. Promoted to Senior Software Engineer & Team Lead for the official IIT
 Kanpur placement portal (RAS), managing a team of 4 developers and a 37K+ line production codebase for 20,000+
-students. Co-authored peer-reviewed deep learning research for ISRO, accepted for a prestigious oral presentation at
+students. Co-authored peer-reviewed deep learning research with ISRO, accepted for a prestigious oral presentation at
 IEEE IGARSS 2026. Expert in Go, Node.js, and React/Next.js, delivering high-availability cloud applications with
 99.9% uptime.
 

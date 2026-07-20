@@ -14,7 +14,7 @@ import Link from "next/link";
 
 const projectsData = [
   {
-    title: "TRINETRA: Vision-Language for ISRO",
+    title: "TRINETRA: Vision-Language with ISRO",
     subtitle: "Research — IEEE IGARSS 2026 Oral Presentation",
     description:
       "Developed a novel vision-language ensemble framework in collaboration with the Indian Space Research Organisation (ISRO). Accepted for a prestigious Oral Presentation at the flagship IEEE International Geoscience and Remote Sensing Symposium in Washington D.C.",
