@@ -77,7 +77,7 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
       {/* Backdrop */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -89,11 +89,11 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
 
       {/* Modal Container */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 30 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 30 }}
-        transition={{ type: "spring", stiffness: 300, damping: 25 }}
-        className="relative w-full max-w-xl rounded-3xl bg-white/95 dark:bg-neutral-900/95 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.15)] md:p-8 border border-neutral-200/50 dark:border-neutral-800/50 z-10 overflow-hidden"
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 100 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="relative w-full max-h-[90dvh] sm:max-h-none sm:h-auto sm:max-w-xl rounded-t-[2.5rem] sm:rounded-3xl bg-white/95 dark:bg-neutral-900/95 p-6 sm:p-8 border-t sm:border border-neutral-200/50 dark:border-neutral-800/50 shadow-[0_-10px_40px_rgba(0,0,0,0.1),0_20px_50px_rgba(0,0,0,0.15)] z-10 overflow-y-auto [scrollbar-width:thin] flex flex-col gap-4 sm:gap-6"
       >
         {/* Subtle grid pattern background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] pointer-events-none z-0" />
@@ -102,18 +102,18 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
         <div className="absolute -top-12 -left-12 w-32 h-32 bg-[#1A4DFF]/10 rounded-full blur-2xl pointer-events-none" />
         <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-[#1A4DFF]/5 rounded-full blur-2xl pointer-events-none" />
 
-        <div className="relative z-10">
-          {/* Close Button */}
-          <button
-            onClick={onClose}
-            className="absolute top-0 right-0 p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300 hover:rotate-90 cursor-pointer"
-            aria-label="Close modal"
-          >
-            <X className="w-5 h-5 text-neutral-500 dark:text-neutral-400" />
-          </button>
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300 hover:rotate-90 cursor-pointer z-20"
+          aria-label="Close modal"
+        >
+          <X className="w-5 h-5 text-neutral-500 dark:text-neutral-400" />
+        </button>
 
+        <div className="relative z-10 flex flex-col gap-4 sm:gap-6 pb-6 sm:pb-0">
           {/* Title */}
-          <div className="mb-6 pr-8">
+          <div className="pr-8">
             <div className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-[#1A4DFF]" />
               <h2 className="text-2xl font-bold text-neutral-900 dark:text-white tracking-tight">
@@ -126,23 +126,23 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
           </div>
 
           {/* Direct Email Actions (Glassmorphic design) */}
-          <div className="mb-6 p-4 rounded-2xl bg-neutral-50/80 dark:bg-neutral-800/40 border border-neutral-200/30 dark:border-neutral-800/40 flex items-center justify-between gap-4">
+          <div className="p-3.5 md:p-4 rounded-2xl bg-neutral-50/80 dark:bg-neutral-800/40 border border-neutral-200/30 dark:border-neutral-800/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#1A4DFF]/10 dark:bg-[#1A4DFF]/20 flex items-center justify-center shadow-inner">
-                <Mail className="w-5 h-5 text-[#1A4DFF]" />
+              <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-[#1A4DFF]/10 dark:bg-[#1A4DFF]/20 flex items-center justify-center shadow-inner shrink-0">
+                <Mail className="w-4.5 h-4.5 md:w-5 md:h-5 text-[#1A4DFF]" />
               </div>
-              <div>
-                <span className="block text-[10px] uppercase tracking-widest font-bold text-neutral-400">
+              <div className="min-w-0">
+                <span className="block text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-neutral-400">
                   Direct Email
                 </span>
-                <span className="text-xs md:text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                <span className="text-xs md:text-sm font-semibold text-neutral-800 dark:text-neutral-200 truncate block">
                   {emailAddress}
                 </span>
               </div>
             </div>
             <button
               onClick={handleCopyEmail}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 text-xs font-semibold text-neutral-600 dark:text-neutral-300 hover:bg-[#1A4DFF] hover:border-transparent hover:text-white dark:hover:bg-[#1A4DFF] transition-all duration-300 cursor-pointer shadow-sm active:scale-95"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 text-xs font-semibold text-neutral-600 dark:text-neutral-300 hover:bg-[#1A4DFF] hover:border-transparent hover:text-white dark:hover:bg-[#1A4DFF] transition-all duration-300 cursor-pointer shadow-sm active:scale-95 w-full sm:w-auto"
             >
               {copiedEmail ? (
                 <>
@@ -158,19 +158,19 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
             </button>
           </div>
 
-          {/* Form */}
+          {/* Form Fields */}
           <div className="space-y-4">
             {/* Quick Template Selector */}
             <div>
               <span className="block text-[10px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-2">
                 Select Purpose (Optional Template)
               </span>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-row flex-nowrap overflow-x-auto gap-2 pb-1.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden -mx-1 px-1">
                 {quickTags.map((tag) => (
                   <button
                     key={tag.id}
                     onClick={() => handleTagClick(tag)}
-                    className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all duration-300 cursor-pointer border ${
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all duration-300 cursor-pointer border whitespace-nowrap ${
                       selectedTag === tag.id
                         ? "bg-[#1A4DFF] text-white border-transparent shadow-[0_4px_12px_rgba(26,77,255,0.2)]"
                         : "bg-neutral-50 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700"
@@ -224,27 +224,27 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
                   setSelectedTag("");
                 }}
                 placeholder="Tell me about your project scale, tech stack, scope, or timeline..."
-                rows={4}
+                rows={3}
                 className="w-full px-4 py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-900/50 text-sm focus:outline-none focus:border-[#1A4DFF] focus:bg-white dark:focus:bg-neutral-950 focus:ring-2 focus:ring-[#1A4DFF]/15 transition-all duration-200 resize-none"
               />
             </div>
 
             {/* Action Buttons */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-2 gap-3 pt-2">
               <button
                 onClick={handleCopyContent}
                 disabled={!name || !email || !message}
-                className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl border border-neutral-200 dark:border-neutral-700 text-sm font-bold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 active:scale-[0.98] cursor-pointer"
+                className="flex items-center justify-center gap-2 px-3 py-3.5 rounded-xl border border-neutral-200 dark:border-neutral-700 text-xs sm:text-sm font-bold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 active:scale-[0.98] cursor-pointer"
               >
                 {copiedContent ? (
                   <>
-                    <Check className="w-4 h-4 text-green-500" />
-                    Copied to Clipboard!
+                    <Check className="w-3.5 h-3.5 text-green-500" />
+                    Copied!
                   </>
                 ) : (
                   <>
-                    <Copy className="w-4 h-4" />
-                    Copy Form Text
+                    <Copy className="w-3.5 h-3.5" />
+                    Copy Form
                   </>
                 )}
               </button>
@@ -252,16 +252,16 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
               <button
                 onClick={handleSendEmail}
                 disabled={!name || !email || !message}
-                className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-[#1A4DFF] hover:bg-[#1A4DFF]/90 text-white text-sm font-bold shadow-[0_4px_14px_rgba(26,77,255,0.3)] disabled:opacity-40 disabled:shadow-none disabled:cursor-not-allowed transition-all duration-300 active:scale-[0.98] cursor-pointer"
+                className="flex items-center justify-center gap-2 px-3 py-3.5 rounded-xl bg-[#1A4DFF] hover:bg-[#1A4DFF]/90 text-white text-xs sm:text-sm font-bold shadow-[0_4px_14px_rgba(26,77,255,0.3)] disabled:opacity-40 disabled:shadow-none disabled:cursor-not-allowed transition-all duration-300 active:scale-[0.98] cursor-pointer"
               >
-                <Send className="w-4 h-4" />
-                Open in Mail App
+                <Send className="w-3.5 h-3.5" />
+                Send Email
               </button>
             </div>
 
             {/* Notice for no mail app */}
-            <p className="text-[10px] text-center text-neutral-400 leading-normal pt-2">
-              💡 Don't have a mail app? Enter details, click <strong className="text-neutral-500 dark:text-neutral-300">Copy Form Text</strong>, and paste it directly into your webmail.
+            <p className="text-[10px] text-center text-neutral-400 leading-normal pt-1">
+              💡 Don't have a mail app? Enter details, click <strong className="text-neutral-500 dark:text-neutral-300">Copy Form</strong>, and paste it directly into your webmail.
             </p>
           </div>
         </div>
