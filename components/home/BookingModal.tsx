@@ -93,7 +93,7 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 100 }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="relative w-full max-h-[90dvh] sm:max-h-none sm:h-auto sm:max-w-xl rounded-t-[2.5rem] sm:rounded-3xl bg-white/95 dark:bg-neutral-900/95 p-6 sm:p-8 border-t sm:border border-neutral-200/50 dark:border-neutral-800/50 shadow-[0_-10px_40px_rgba(0,0,0,0.1),0_20px_50px_rgba(0,0,0,0.15)] z-10 overflow-y-auto [scrollbar-width:thin] flex flex-col gap-4 sm:gap-6"
+        className="relative w-full max-h-[90dvh] sm:max-h-none sm:h-auto sm:max-w-xl rounded-t-[2.5rem] sm:rounded-3xl bg-white/95 dark:bg-neutral-900/95 p-6 sm:p-8 border-t sm:border border-neutral-200/50 dark:border-neutral-800/50 shadow-[0_-10px_40px_rgba(0,0,0,0.1),0_20px_50px_rgba(0,0,0,0.15)] z-10 overflow-y-auto overflow-x-hidden sm:overflow-visible [scrollbar-width:thin] flex flex-col gap-4 sm:gap-6"
       >
         {/* Subtle grid pattern background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] pointer-events-none z-0" />

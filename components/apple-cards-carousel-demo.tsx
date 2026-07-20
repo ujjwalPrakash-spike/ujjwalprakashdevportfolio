@@ -25,7 +25,6 @@ export default function AppleCardsCarouselDemo() {
 
     if (!container) return;
 
-    // Set initial states for clean fade and slide
     gsap.set(container, { opacity: 0, scale: 0.98 });
     if (title) gsap.set(title, { opacity: 0, y: 15 });
     if (title2) gsap.set(title2, { opacity: 0, y: 15 });
@@ -158,6 +157,7 @@ const ProjectContent = ({
   useEffect(() => {
     // Auto-play video when expanded content mounts
     videoRef.current?.play().catch(() => {});
+    z;
   }, []);
 
   return (
